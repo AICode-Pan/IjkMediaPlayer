@@ -49,7 +49,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private String TAG = "IjkVideoView";
     // settable by the client
     private Uri mUri;
-    private Map<String, String> mHeaders;
 
     // all possible internal states
     private static final int STATE_ERROR = -1;
@@ -209,7 +208,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
      */
     private void setVideoURI(Uri uri, Map<String, String> headers) {
         mUri = uri;
-        mHeaders = headers;
         mSeekWhenPrepared = 0;
         openVideo();
         requestLayout();
@@ -279,7 +277,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                 IMediaDataSource dataSource = new FileMediaDataSource(new File(mUri.toString()));
                 mMediaPlayer.setDataSource(dataSource);
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                mMediaPlayer.setDataSource(mAppContext, mUri, mHeaders);
+                mMediaPlayer.setDataSource(mAppContext, mUri);
             } else {
                 mMediaPlayer.setDataSource(mUri.toString());
             }
@@ -842,34 +840,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 //        setRenderView(textureRenderView);
     }
 
-    private boolean isSupportH264Decoder() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            int numCodecs = MediaCodecList.getCodecCount();
-            HashMap<String, String> map;
-            for (int i = 0; i < numCodecs; i++) {
-                MediaCodecInfo codecInfo = MediaCodecList.getCodecInfoAt(i);
-                map = new HashMap<String, String>();
-                if (!codecInfo.isEncoder()) {
-                    continue;
-                }
-                map.put("decoderName", codecInfo.getName());
-                String[] types = codecInfo.getSupportedTypes();
-                for (int j = 0; j < types.length; j++) {
-                    if (types[j].equals("video/avc")) {
-                        return true;
-                    }
-                    if (map.containsValue(types[j])) {
-                        continue;
-                    } else {
-                        map.put("decoderType", types[j]);
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return false;
-    }
     //-------------------------
     // Extend: Player
     //-------------------------
