@@ -1,1 +1,2 @@
 # IjkMediaPlayer
+基础开源IjkVideoView开发的播放器

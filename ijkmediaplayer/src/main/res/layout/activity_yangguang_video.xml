@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/mRootLayout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000000">
+
+    <com.media.ijkmediaplayer.IjkVideoView
+        android:id="@+id/yg_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.media.ijkmediaplayer.AndroidMediaController
+        android:id="@+id/media_controller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/yg_video_info_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
+
+</RelativeLayout>
